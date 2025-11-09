@@ -50,7 +50,11 @@ class CollaborativeCanvasApp {
     document.querySelector('.canvas-wrapper').appendChild(this.remoteCursorsContainer);
     
     this.canvasManager = new CanvasManager(this.canvas);
-    this.wsClient = new WebSocketClient('http://localhost:3000');
+    // Use production backend URL if on Vercel, otherwise use localhost
+    const backendUrl = window.location.hostname === 'real-time-canva.vercel.app' 
+      ? 'https://realtime-canva-server.onrender.com'
+      : 'http://localhost:3000';
+    this.wsClient = new WebSocketClient(backendUrl);
     
     this.startConflictMonitoring();
     this.init();
