@@ -1,0 +1,148 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Collaborative Canvas - Client</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <h1 class="app-title">
+          <i class="fas fa-palette"></i>
+          <span>Canvas</span>
+        </h1>
+      </div>
+
+      <div class="tool-card">
+        <h3 class="card-title">
+          <i class="fas fa-pencil-alt"></i>
+          Drawing Tools
+        </h3>
+        <div class="tool-buttons">
+          <button id="brushBtn" class="tool-btn active" data-tool="brush" title="Brush (B)">
+            <i class="fas fa-paintbrush"></i>
+            <span>Brush</span>
+          </button>
+          <button id="eraserBtn" class="tool-btn" data-tool="eraser" title="Eraser (E)">
+            <i class="fas fa-eraser"></i>
+            <span>Eraser</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <h3 class="card-title">
+          <i class="fas fa-fill-drip"></i>
+          Color & Size
+        </h3>
+        
+        <div class="control-group">
+          <label for="colorPicker" class="control-label">
+            <i class="fas fa-palette"></i>
+            Color
+          </label>
+          <div class="color-picker-wrapper">
+            <input id="colorPicker" type="color" value="#000000">
+            <span id="colorHex">#000000</span>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label for="widthRange" class="control-label">
+            <i class="fas fa-arrows-alt-h"></i>
+            Brush Size
+          </label>
+          <div class="slider-wrapper">
+            <input id="widthRange" type="range" min="1" max="80" value="5">
+            <span id="widthLabel" class="size-badge">5px</span>
+          </div>
+          <div id="brushPreview" class="brush-preview"></div>
+        </div>
+      </div>
+
+      <div class="tool-card">
+        <h3 class="card-title">
+          <i class="fas fa-cog"></i>
+          Actions
+        </h3>
+        <div class="action-buttons">
+          <button id="undoBtn" class="action-btn" title="Undo (Ctrl+Z)">
+            <i class="fas fa-undo"></i>
+            <span>Undo</span>
+          </button>
+          <button id="redoBtn" class="action-btn" title="Redo (Ctrl+Y)">
+            <i class="fas fa-redo"></i>
+            <span>Redo</span>
+          </button>
+          <button id="clearBtn" class="action-btn danger" title="Clear Canvas">
+            <i class="fas fa-trash"></i>
+            <span>Clear</span>
+          </button>
+          <button id="downloadBtn" class="action-btn success" title="Download PNG">
+            <i class="fas fa-download"></i>
+            <span>Download</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="tool-card" id="conflictInfo" style="display: none;">
+        <h3 class="card-title">
+          <i class="fas fa-sync-alt"></i>
+          Sync Status
+        </h3>
+        <div class="conflict-stats">
+          <div class="stat-item">
+            <span class="stat-label">Queue:</span>
+            <span id="queueLength" class="stat-value">0</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Buffered:</span>
+            <span id="bufferedStrokes" class="stat-value">0</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">Clock:</span>
+            <span id="lamportClock" class="stat-value">0</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="shortcut-info">
+          <small>
+            <i class="fas fa-keyboard"></i>
+            Shortcuts: Ctrl+Z (Undo) | Ctrl+Y (Redo)
+          </small>
+        </div>
+      </div>
+    </aside>
+
+    <main class="canvas-container">
+      <div class="canvas-header">
+        <div class="canvas-info">
+          <span id="canvasSize" class="info-badge">
+            <i class="fas fa-expand-arrows-alt"></i>
+            <span>Loading...</span>
+          </span>
+          <span id="toolIndicator" class="info-badge active-tool">
+            <i class="fas fa-paintbrush"></i>
+            <span>Brush Mode</span>
+          </span>
+        </div>
+      </div>
+      
+      <div class="canvas-wrapper">
+        <canvas id="canvas"></canvas>
+        <div id="cursorPreview" class="cursor-preview"></div>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+  <script type="module" src="./main.js"></script>
+</body>
+</html>
